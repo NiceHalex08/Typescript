@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// Library import
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-function App() {
+//Internal imports
+import "./App.css";
+
+import { Box } from "@mui/material";
+import Pag1 from "./routes/Pag1";
+import Pag2 from "./routes/Pag2";
+import Aplic from "./Components/Aplic";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Aplic />} />
+          <Route path="/Pag1" element={<Pag1 />} />
+          <Route path="/Pag2" element={<Pag2 />} />
+        </Routes>
+      </Router>
+    </Box>
   );
-}
+};
 
 export default App;
