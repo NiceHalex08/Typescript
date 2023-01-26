@@ -8,13 +8,14 @@ import { Box } from "@mui/material";
 import Pag1 from "./routes/Pag1";
 import Pag2 from "./routes/Pag2";
 import Aplic from "./Components/Aplic";
+import Login from "./Components/Login";
 
 const App = () => {
   return (
     <Box>
       <Router>
         <Routes>
-          <Route path="/" element={<Aplic />} />
+          <Route path="/" element={<Login />} />
           <Route path="/Pag1" element={<Pag1 />} />
           <Route path="/Pag2" element={<Pag2 />} />
         </Routes>
