@@ -18,8 +18,15 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme();
-
-export default function Login<T>(setToken: T) {
+interface User {
+  id: string;
+  username: string;
+  userpass: string;
+}
+interface Props {
+  setToken: (userToken: any) => void;
+}
+const Login: React.FC<Props> = ({ setToken }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [user, setUser] = useState([]);
@@ -27,7 +34,7 @@ export default function Login<T>(setToken: T) {
   let navigate = useNavigate();
 
   const fetchData = () => {
-    fetch("http://localhost:5050/users")
+    fetch("http://localhost:3010/user")
       .then((response) => {
         return response.json();
       })
@@ -57,14 +64,14 @@ export default function Login<T>(setToken: T) {
       let check = 0;
       user.map((us) => {
         console.log(us);
-        //   if (
-        //     us.username.toLowerCase() === email.toLowerCase() &&
-        //     us.userpass === password
-
-        //   ) {
-        //     setToken(us);
-        //     check = 1;
-        //   }
+        if (
+          // us.username.toLowerCase() === email.toLowerCase() &&
+          // us.userpass === password
+          us === "admin"
+        ) {
+          setToken(us);
+          check = 1;
+        }
       });
       check === 1 ? navigate("/program") : setMessage("Date incorecte");
     }
@@ -130,7 +137,8 @@ export default function Login<T>(setToken: T) {
       </Container>
     </ThemeProvider>
   );
-}
+};
+export default Login;
 Login.propTypes = {
   setToken: PropTypes.func.isRequired,
 };
