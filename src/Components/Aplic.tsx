@@ -1,25 +1,43 @@
 // Library imports
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import axios, * as others from 'axios';
 
 //Internal imports
 
 //Design imports
 
-import { Box } from "@mui/material";
-import Header from "../Header";
-import Form from "../Form";
-import Cards from "./Cards";
-import SimpleSnackbar from "./SnakBar";
-import { iCard } from "./Card";
+import { Box } from '@mui/material';
+import Header from '../Header';
+import Form from '../Form';
+import Cards from './Cards';
+import SimpleSnackbar from './SnakBar';
+import { iCard } from './Card';
+import Nav from './Nav';
+
+function getToken(): any | undefined {
+  const tokenString = sessionStorage.getItem('user');
+  const userToken = JSON.parse(tokenString || '{}');
+  return userToken;
+}
 
 const Aplic = () => {
   const [cards, setCards] = useState<iCard[]>([]);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const token = getToken();
 
   const addCard = (name: string, count: number) => {
     setCards([...cards, { id: uuidv4(), name: name, count: count }]);
+    axios
+      .post('http://localhost:3011/insert/card', {
+        name: name,
+        count: count,
+        id: token.iduser,
+      })
+      .then(() => {
+        console.log('successful');
+      });
   };
   const update1 = (id: string) => {
     let newArr = [...cards];
@@ -60,16 +78,14 @@ const Aplic = () => {
 
   return (
     <Box>
-      <Box className="stiky">
-        <Box className="header">
-          <Header />
-        </Box>
+      <Box className='stiky'>
+        <Nav />
       </Box>
-      <Box className="center">
-        <Box className="Sidebar">
+      <Box className='center'>
+        <Box className='Sidebar'>
           <Form addCard={addCard} />
         </Box>
-        <Box className="main">
+        <Box className='main'>
           <Cards
             cards={cards}
             update1={update1}
@@ -78,7 +94,7 @@ const Aplic = () => {
           />
         </Box>
       </Box>
-      <Box className="footer" />
+      <Box className='footer' />
       {
         <SimpleSnackbar
           message={message}
