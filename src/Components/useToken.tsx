@@ -4,13 +4,7 @@ export default function useToken(): {
   setToken: (userToken: any) => void;
   token: any;
 } {
-  //   type User = {
-  //   id: number;
-  //   username: string;
-  //   userpass: string;
-  // };
   const getToken = (): any => {
-    //const tokenString = sessionStorage.getItem("user");
     const userToken = JSON.parse(sessionStorage.getItem("user") || "{}");
     return userToken?.token;
   };

@@ -1,16 +1,18 @@
 //Internal imports
-import '../App.css';
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import "../App.css";
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+
+// Design improts
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 
 const theme = createTheme();
 interface User {
@@ -22,12 +24,12 @@ interface Props {
   setToken: (userToken: any) => void;
 }
 const Login: React.FC<Props> = ({ setToken }) => {
-  const [username, setUsername] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [user, setUser] = useState<User[]>([
-    { iduser: '', username: '', userpass: '' },
+    { iduser: "", username: "", userpass: "" },
   ]);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   let navigate = useNavigate();
 
   const onChangeUsername = (
@@ -43,7 +45,7 @@ const Login: React.FC<Props> = ({ setToken }) => {
   };
 
   const fetchData = async () => {
-    const response = await fetch('http://localhost:3011/user');
+    const response = await fetch("http://localhost:3011/user");
     const data = await response.json();
     setUser(data);
   };
@@ -53,9 +55,9 @@ const Login: React.FC<Props> = ({ setToken }) => {
   }, []);
 
   const handleClick = () => {
-    if (typeof username === 'undefined') setMessage('Nu ati introdus emailul!');
-    else if (typeof password === 'undefined')
-      setMessage('Nu ati introdus parola!');
+    if (typeof username === "undefined") setMessage("Nu ati introdus emailul!");
+    else if (typeof password === "undefined")
+      setMessage("Nu ati introdus parola!");
     else {
       let check = 0;
       user.map((us) => {
@@ -65,60 +67,60 @@ const Login: React.FC<Props> = ({ setToken }) => {
           check = 1;
         }
       });
-      check === 1 ? navigate('/aplic') : setMessage('Date incorecte');
+      check === 1 ? navigate("/aplic") : setMessage("Date incorecte");
     }
   };
   return (
     <ThemeProvider theme={theme}>
-      <Container component='main' maxWidth='xs'>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            background: '#bcbd8b',
-            borderRadius: '15px',
-            padding: '40px',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            background: "#bcbd8b",
+            borderRadius: "15px",
+            padding: "40px",
           }}
         >
-          <Typography component='h1' variant='h5' sx={{ color: 'white' }}>
+          <Typography component="h1" variant="h5" sx={{ color: "white" }}>
             Login
           </Typography>
-          <Box component='form' noValidate sx={{ mt: 1 }}>
+          <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
-              margin='normal'
+              margin="normal"
               required
               fullWidth
-              id='user'
-              label='username'
-              name='username'
-              autoComplete='user'
+              id="user"
+              label="Username"
+              name="username"
+              autoComplete="user"
               autoFocus
-              color='success'
+              color="success"
               value={username}
               onChange={(e) => onChangeUsername(e)}
             />
             <TextField
-              margin='normal'
+              margin="normal"
               required
               fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
-              autoComplete='current-password'
-              color='success'
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              color="success"
               value={password}
               onChange={(e) => onChangePassword(e)}
             />
 
             <Button
               fullWidth
-              variant='outlined'
+              variant="outlined"
               sx={{ mt: 3, mb: 2 }}
-              color='success'
+              color="success"
               onClick={handleClick}
             >
               Sign In
