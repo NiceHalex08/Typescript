@@ -1,5 +1,5 @@
 // Library imports
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios, * as others from "axios";
 
 //Design imports
@@ -10,13 +10,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import { Box } from "@mui/material";
+import { iCard } from "./Card";
 
-export interface iCard {
-  idcard: string;
-  name: string;
-  count: number;
-  username: string;
-}
 interface Props {
   key: string;
   card: iCard;
@@ -25,17 +20,17 @@ interface Props {
   deleteCards: (id: string) => void;
 }
 
-function getToken(): any | undefined {
-  const tokenString = sessionStorage.getItem("user");
-  const userToken = JSON.parse(tokenString || "{}");
-  return userToken;
-}
-const Card: React.FC<Props> = (props) => {
+// function getToken(): any | undefined {
+//   const tokenString = sessionStorage.getItem("user");
+//   const userToken = JSON.parse(tokenString || "{}");
+//   return userToken;
+// }
+const OldCards: React.FC<Props> = (props) => {
   const { card: element, update1, handleMinus, deleteCards } = props;
   const [value, setValue] = useState<string>("");
   const [isInput, setIsInput] = useState(false);
-  const token = getToken();
-  console.log(props);
+  // const token = getToken();
+
   const onChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
@@ -97,4 +92,4 @@ const Card: React.FC<Props> = (props) => {
     </Box>
   );
 };
-export default Card;
+export default OldCards;
