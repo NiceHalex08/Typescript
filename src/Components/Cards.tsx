@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 
 //Design imports
 import { Box } from "@mui/material";
-import OldCards from "./OldCards";
 import React from "react";
 
 interface Props {
@@ -16,15 +15,9 @@ interface Props {
   update1: (id: string) => void;
   deleteCards: (id: string) => void;
 }
-function getToken(): any | undefined {
-  const tokenString = sessionStorage.getItem("user");
-  const userToken = JSON.parse(tokenString || "{}");
-  return userToken;
-}
 
 const Cards: React.FC<Props> = (props) => {
   const { cards, update1, handleMinus, deleteCards } = props;
-  const token = getToken();
 
   return (
     <Box className="objcontent">

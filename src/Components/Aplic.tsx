@@ -1,6 +1,6 @@
 // Library imports
 import { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+
 import axios, * as others from "axios";
 
 //Internal imports
@@ -27,19 +27,14 @@ const Aplic = () => {
   const token = getToken();
 
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:3011/itemCard");
-    console.log(response);
+    const response = await axios.get(
+      `http://localhost:3011/itemCard/${token.username}`
+    );
     setCards(response.data);
   };
   useEffect(() => {
     fetchData().catch(() => console.log("err"));
-    // elements().catch(() => console.log("err"));
-    console.log(cards);
   }, []);
-  // const elements = () => {
-  //   if (token.username != "admim")
-  //     setCards(cards.filter((cards) => cards.username == token.username));
-  // };
 
   const addCard = (name: string, count: number) => {
     axios
@@ -48,21 +43,21 @@ const Aplic = () => {
         count: count,
         id: token.iduser,
       })
-      // "SELECT card.idcard,card.name, card.count, user.username from card inner join user on card.iduser=user.iduser"
+
       .then(() => {
         fetchData()
           .then(() => {
-            console.log("success minus");
+            console.log("success add");
           })
           .catch(() => {
             console.log("eroare");
           });
       });
+    showMessage(`Ati adaugat: ${name}`);
   };
   const update1 = (id: string) => {
     let newArr = [...cards];
     const el = newArr.find((el) => el.idcard === id);
-    console.log(el);
     if (el) {
       axios
         .post(
@@ -80,13 +75,13 @@ const Aplic = () => {
         .then(() => {
           fetchData()
             .then(() => {
-              console.log("success minus");
+              console.log("success plus");
             })
             .catch(() => {
               console.log("eroare");
             });
         });
-      showMessage(`Cantitatea noua este de: ${el.count}`);
+      showMessage(`Cantitatea noua este de: ${el.count + 1}`);
     }
   };
 

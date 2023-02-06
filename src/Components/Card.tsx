@@ -1,6 +1,5 @@
 // Library imports
 import { useState, useEffect } from "react";
-import axios, * as others from "axios";
 
 //Design imports
 import { Button, TextField, Typography } from "@mui/material";
@@ -10,6 +9,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import { Box } from "@mui/material";
+import axios from "axios";
 
 export interface iCard {
   idcard: string;
@@ -25,17 +25,11 @@ interface Props {
   deleteCards: (id: string) => void;
 }
 
-function getToken(): any | undefined {
-  const tokenString = sessionStorage.getItem("user");
-  const userToken = JSON.parse(tokenString || "{}");
-  return userToken;
-}
 const Card: React.FC<Props> = (props) => {
   const { card: element, update1, handleMinus, deleteCards } = props;
   const [value, setValue] = useState<string>("");
   const [isInput, setIsInput] = useState(false);
-  const token = getToken();
-  console.log(props);
+
   const onChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
@@ -48,6 +42,14 @@ const Card: React.FC<Props> = (props) => {
     if (get) {
       get.innerHTML = value;
     }
+    axios
+      .post("http://localhost:3011/update/name", {
+        name: value,
+        id: element.idcard,
+      })
+      .then(() => {
+        console.log("successful update name " + value);
+      });
   };
   return (
     <Box className="obj">
